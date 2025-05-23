@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Мебельный Магазин</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/templatemo.css}">
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
+
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+    <link rel="stylesheet" th:href="@{/css/fontawesome.min.css}">
+</head>
+
+<body>
+<th:block th:replace="~{fragments/header :: header}"></th:block>
+<th:block th:replace="~{fragments/search :: search}"></th:block>
+
+<div class="container py-5">
+    <div class="row">
+
+        <div class="col-lg-3">
+            <h1 class="h2 pb-4">Корзина</h1>
+            <ul class="list-unstyled templatemo-accordion" th:unless="${orderId}">
+                <li class="pb-3">
+                    <a class="d-flex justify-content-between h3 text-decoration-none">
+                        Детали заказа
+                        <i class="pull-right fa fa-fw fa-chevron-circle-down mt-1"></i>
+                    </a>
+                    <ul id="collapseTwo" class="list-unstyled pl-3">
+                        <li class="text-decoration-none" th:text="'Кол-во позиций: ' + ${cart.size()}"></li>
+                        <li class="text-decoration-none" th:text="'Итого к оплате: ' + ${totalPrice} + '₽'"></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="col-lg-9">
+            <div class="row g-3">
+                <div class="mt-4 p-3 bg-light rounded text-center" th:if="${orderId}">
+                    <h4 class="fw-normal">У вас есть активный заказ. Вы можете продолжить его оформление по ссылке: <a
+                            th:href="@{/orders/{id}(id=${orderId})}" th:text="'Заказ №' + ${orderId}"></a></h4>
+                </div>
+                <div class="col-12" th:each="entry : ${cart}">
+                    <div class="card shadow-sm p-3 d-flex flex-row align-items-center">
+
+                        <div style="width: 100px;">
+                            <img th:src="@{${entry.key.img}}" class="img-fluid rounded" alt="item image">
+                        </div>
+
+                        <div class="flex-grow-1 ps-3">
+                            <h5 class="mb-1" th:text="${entry.key.name}"></h5>
+                            <p class="mb-1 text-muted" th:text="'Бренд: ' + ${entry.key.brand}"></p>
+                            <p class="mb-1" th:text="'Кол-во: ' + ${entry.value}"></p>
+                            <p class="mb-0 fw-bold" th:text="${entry.key.price.doubleValue() * entry.value} + '₽'"></p>
+                        </div>
+
+                        <div>
+                            <form th:action="@{/cart/remove}" method="post">
+                                <input type="hidden" name="itemId" th:value="${entry.key.id}"/>
+                                <input type="hidden" name="count" value=1>
+                                <button type="submit" class="btn btn-outline-danger">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-4 p-3 bg-light rounded text-end">
+                <h4 class="fw-bold">Итого: <span th:text="${totalPrice} + '₽'"></span></h4>
+                <form th:action="@{/orders}" method="post">
+                    <button type="submit" class="btn btn-success btn-lg mt-2">Далее</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<th:block th:replace="~{fragments/footer :: footer}"></th:block>
+
+<script th:src="@{/js/jquery-1.11.0.min.js}"></script>
+<script th:src="@{/js/jquery-migrate-1.2.1.min.js}"></script>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/js/templatemo.js}"></script>
+</body>
+</html>

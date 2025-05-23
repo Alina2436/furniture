@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Профиль</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/templatemo.css}">
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
+
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/fontawesome.min.css}">
+</head>
+
+<body>
+<th:block th:replace="~{fragments/header :: header}"></th:block>
+<th:block th:replace="~{fragments/search :: search}"></th:block>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-11">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="text-center mb-4">Карта пользователя</h3>
+                    <div class="container mt-5">
+                        <div class="row justify-content-center">
+                            <div class="col-md-11">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <!-- Навигация по вкладкам -->
+                                        <ul class="nav nav-tabs" id="profileTabs" role="tablist">
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link active" id="main-tab" data-bs-toggle="tab"
+                                                        data-bs-target="#main"
+                                                        type="button" role="tab">Основная информация
+                                                </button>
+                                            </li>
+                                            <li class="nav-item">
+                                                <button class="nav-link" id="favorites-tab" data-bs-toggle="tab"
+                                                        data-bs-target="#favorites"
+                                                        type="button" role="tab">Избранное
+                                                </button>
+                                            </li>
+                                            <li class="nav-item">
+                                                <button class="nav-link" id="my-items-tab" data-bs-toggle="tab"
+                                                        data-bs-target="#my-items"
+                                                        type="button" role="tab">Мои товары
+                                                </button>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link" id="delivery-tab" data-bs-toggle="tab"
+                                                        data-bs-target="#delivery"
+                                                        type="button" role="tab">В доставке
+                                                </button>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link" id="done-tab" data-bs-toggle="tab"
+                                                        data-bs-target="#done"
+                                                        type="button" role="tab">Завершенные
+                                                </button>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link" id="new-tab" data-bs-toggle="tab"
+                                                        data-bs-target="#new"
+                                                        type="button" role="tab">Новые
+                                                </button>
+                                            </li>
+                                        </ul>
+
+                                        <!-- Контент вкладок -->
+                                        <div class="tab-content mt-3" id="profileTabsContent">
+                                            <!-- Вкладка 1: основная информация -->
+                                            <div class="tab-pane fade show active" id="main" role="tabpanel">
+                                                <form th:action="@{/users/{id}(id=${user.id})}" method="post"
+                                                      th:object="${userDto}">
+                                                    <div class="mb-3">
+                                                        <label for="username" class="form-label">Логин</label>
+                                                        <input type="text" readonly required class="form-control"
+                                                               id="username" th:field="*{username}">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="email" class="form-label">Email</label>
+                                                        <input type="email" required class="form-control" id="email"
+                                                               th:field="*{email}">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="phone" class="form-label">Телефон</label>
+                                                        <input type="text" required class="form-control" id="phone"
+                                                               th:field="*{phone}">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="lastname" class="form-label">Фамилия</label>
+                                                        <input type="text" required class="form-control" id="lastname"
+                                                               th:field="*{lastname}">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="name" class="form-label">Имя</label>
+                                                        <input type="text" required class="form-control" id="name"
+                                                               th:field="*{name}">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="patronymic" class="form-label">Отчество</label>
+                                                        <input type="text" class="form-control" id="patronymic"
+                                                               th:field="*{patronymic}">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="age" class="form-label">Возраст</label>
+                                                        <input type="number" required class="form-control" id="age"
+                                                               th:field="*{age}">
+                                                    </div>
+                                                    <button type="submit" class="btn btn-primary w-100">Сохранить
+                                                        изменения
+                                                    </button>
+                                                </form>
+
+                                                <p th:if="${error}" th:text="${error}" style="color:red;"></p>
+                                            </div>
+
+                                            <div class="tab-pane fade" id="favorites" role="tabpanel">
+                                                <div th:each="item : ${user.likes}" class="mb-3">
+                                                    <a th:href="@{/items/{id}(id=${item.id})}"
+                                                       class="text-decoration-none text-dark">
+                                                        <div class="card shadow-sm rounded p-3 d-flex flex-row align-items-center">
+                                                            <img th:src="@{${item.img}}" alt="item"
+                                                                 class="rounded me-3"
+                                                                 style="width: 80px; height: 80px; object-fit: cover;">
+                                                            <div>
+                                                                <h5 th:text="${item.name}" class="mb-1"></h5>
+                                                                <p th:text="'Бренд: ' + ${item.brand}"
+                                                                   class="mb-1 text-muted"></p>
+                                                                <p th:text="${item.price} + '₽'"
+                                                                   class="fw-bold mb-0"></p>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+
+                                            <div class="tab-pane fade" id="my-items" role="tabpanel">
+                                                <div th:each="oi : ${purchased}" class="mb-3">
+                                                    <div class="card shadow-sm rounded p-3 d-flex flex-row align-items-center justify-content-between">
+                                                        <div class="d-flex align-items-center">
+                                                            <img th:src="@{${oi.item.img}}" alt="item"
+                                                                 class="rounded me-3"
+                                                                 style="width: 80px; height: 80px; object-fit: cover;">
+                                                            <div>
+                                                                <h5 th:text="${oi.item.name}" class="mb-1"></h5>
+                                                                <p th:text="'Бренд: ' + ${oi.item.brand}"
+                                                                   class="mb-1 text-muted"></p>
+                                                                <p th:text="${oi.item.price} + '₽'"
+                                                                   class="fw-bold mb-0"></p>
+                                                            </div>
+                                                        </div>
+                                                        <button class="btn btn-outline-success btn-sm"
+                                                                th:attr="data-bs-toggle='modal', data-bs-target='#rateModal', data-item-id=${oi.item.id}">
+                                                            Оценить
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="rateModal" tabindex="-1"
+                                                 aria-labelledby="rateModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content p-3">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="rateModalLabel">Оценить
+                                                                товар</h5>
+                                                            <button type="button" class="btn-close"
+                                                                    data-bs-dismiss="modal"
+                                                                    aria-label="Закрыть"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div id="star-container" class="text-center mb-3">
+                                                                <i class="far fa-star fa-2x text-warning"
+                                                                   data-value="1"></i>
+                                                                <i class="far fa-star fa-2x text-warning"
+                                                                   data-value="2"></i>
+                                                                <i class="far fa-star fa-2x text-warning"
+                                                                   data-value="3"></i>
+                                                                <i class="far fa-star fa-2x text-warning"
+                                                                   data-value="4"></i>
+                                                                <i class="far fa-star fa-2x text-warning"
+                                                                   data-value="5"></i>
+                                                            </div>
+
+                                                            <div class="mb-3">
+                                                                <label for="rating-comment" class="form-label">Оставьте
+                                                                    отзыв</label>
+                                                                <textarea class="form-control" id="rating-comment"
+                                                                          rows="4"></textarea>
+                                                            </div>
+                                                            <button id="submit-rating" class="btn btn-success">
+                                                                Сохранить
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Вкладка 2: заказы в доставке -->
+                                            <div class="tab-pane fade" id="delivery" role="tabpanel">
+                                                <div th:each="order : ${user.orders}"
+                                                     th:if="${order.status == 'DELIVERY'}" class="mb-3">
+                                                    <a th:href="@{/orders/{id}(id=${order.id})}"
+                                                       class="text-decoration-none text-dark">
+                                                        <div class="card shadow-sm rounded p-3">
+                                                            <div class="d-flex align-items-center mb-2">
+                                                                <!-- Маленькие картинки товаров -->
+                                                                <div class="d-flex align-items-center me-3"
+                                                                     style="gap: 0.5rem;">
+                                                                    <div th:each="oi, iterStat : ${#lists.toList(order.orderItems).subList(0, T(java.lang.Math).min(3, order.orderItems.size()))}">
+                                                                        <img th:src="@{${oi.item.img}}"
+                                                                             alt="item"
+                                                                             class="rounded-circle border"
+                                                                             style="width: 40px; height: 40px; object-fit: cover;">
+                                                                    </div>
+                                                                    <div th:if="${order.orderItems.size() > 3}"
+                                                                         class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center"
+                                                                         style="width: 40px; height: 40px; font-size: 0.9rem;">
+                                                                        +<span
+                                                                            th:text="${order.orderItems.size() - 3}"></span>
+                                                                    </div>
+                                                                </div>
+
+                                                                <!-- Инфо -->
+                                                                <div>
+                                                                    <div class="fw-bold"
+                                                                         th:text="'Заказ #' + ${order.id} + ' — ' + ${order.totalPrice} + '₽'"></div>
+                                                                    <div class="text-muted small"
+                                                                         th:text="${#temporals.format(order.created, 'HH:mm dd.MM.yyyy')}"></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+
+                                            <!-- Вкладка 3: завершенные заказы -->
+                                            <div class="tab-pane fade" id="done" role="tabpanel">
+                                                <div th:each="order : ${user.orders}" th:if="${order.status == 'DONE'}"
+                                                     class="mb-3">
+                                                    <a th:href="@{/orders/{id}(id=${order.id})}"
+                                                       class="text-decoration-none text-dark">
+                                                        <div class="card shadow-sm rounded p-3">
+                                                            <div class="d-flex align-items-center mb-2">
+                                                                <div class="d-flex align-items-center me-3"
+                                                                     style="gap: 0.5rem;">
+                                                                    <div th:each="oi, iterStat : ${#lists.toList(order.orderItems).subList(0, T(java.lang.Math).min(3, order.orderItems.size()))}">
+                                                                        <img th:src="@{${oi.item.img}}"
+                                                                             alt="item"
+                                                                             class="rounded-circle border"
+                                                                             style="width: 40px; height: 40px; object-fit: cover;">
+                                                                    </div>
+                                                                    <div th:if="${order.orderItems.size() > 3}"
+                                                                         class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center"
+                                                                         style="width: 40px; height: 40px; font-size: 0.9rem;">
+                                                                        +<span
+                                                                            th:text="${order.orderItems.size() - 3}"></span>
+                                                                    </div>
+                                                                </div>
+                                                                <div>
+                                                                    <div class="fw-bold"
+                                                                         th:text="'Заказ #' + ${order.id} + ' — ' + ${order.totalPrice} + '₽'"></div>
+                                                                    <div class="text-muted small"
+                                                                         th:text="${#temporals.format(order.created, 'HH:mm dd.MM.yyyy')}"></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+
+                                            <!-- Вкладка 4: новые заказы -->
+                                            <div class="tab-pane fade" id="new" role="tabpanel">
+                                                <div th:each="order : ${user.orders}" th:if="${order.status == 'NEW'}"
+                                                     class="mb-3">
+                                                    <a th:href="@{/orders/{id}(id=${order.id})}"
+                                                       class="text-decoration-none text-dark">
+                                                        <div class="card shadow-sm rounded p-3">
+                                                            <div class="d-flex align-items-center mb-2">
+                                                                <div class="d-flex align-items-center me-3"
+                                                                     style="gap: 0.5rem;">
+                                                                    <div th:each="oi, iterStat : ${#lists.toList(order.orderItems).subList(0, T(java.lang.Math).min(3, order.orderItems.size()))}">
+                                                                        <img th:src="@{${oi.item.img}}"
+                                                                             alt="item"
+                                                                             class="rounded-circle border"
+                                                                             style="width: 40px; height: 40px; object-fit: cover;">
+                                                                    </div>
+                                                                    <div th:if="${order.orderItems.size() > 3}"
+                                                                         class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center"
+                                                                         style="width: 40px; height: 40px; font-size: 0.9rem;">
+                                                                        +<span
+                                                                            th:text="${order.orderItems.size() - 3}"></span>
+                                                                    </div>
+                                                                </div>
+                                                                <div>
+                                                                    <div class="fw-bold"
+                                                                         th:text="'Заказ #' + ${order.id} + ' — ' + ${order.totalPrice} + '₽'"></div>
+                                                                    <div class="text-muted small"
+                                                                         th:text="${#temporals.format(order.created, 'HH:mm dd.MM.yyyy')}"></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block th:replace="~{fragments/footer :: footer}"></th:block>
+
+<script th:src="@{/js/jquery-1.11.0.min.js}"></script>
+<script th:src="@{/js/jquery-migrate-1.2.1.min.js}"></script>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/js/templatemo.js}"></script>
+<script th:inline="javascript">
+    document.addEventListener("DOMContentLoaded", () => {
+        const userId = [[${user.id}]];
+        let selectedRating = 0;
+        let currentItemId = null;
+
+        const stars = document.querySelectorAll("#star-container i");
+
+        function updateStars(highlighted) {
+            stars.forEach((s, i) => {
+                s.classList.remove("fas", "far");
+                s.classList.add(i < highlighted ? "fas" : "far");
+            });
+        }
+
+        stars.forEach(star => {
+            star.addEventListener("mouseover", () => {
+                const value = parseInt(star.dataset.value);
+                updateStars(value);
+            });
+
+            star.addEventListener("mouseout", () => {
+                updateStars(selectedRating);
+            });
+
+            star.addEventListener("click", () => {
+                selectedRating = parseInt(star.dataset.value);
+                updateStars(selectedRating);
+            });
+        });
+
+        // При открытии модалки
+        document.querySelectorAll("button[data-bs-target='#rateModal']").forEach(button => {
+            button.addEventListener("click", () => {
+                currentItemId = button.getAttribute("data-item-id");
+                selectedRating = 0;
+                document.getElementById("rating-comment").value = '';
+                updateStars(0);
+            });
+        });
+
+        // Отправка оценки
+        document.getElementById("submit-rating").addEventListener("click", async () => {
+            const comment = document.getElementById("rating-comment").value.trim();
+
+            if (!currentItemId || selectedRating === 0) {
+                alert("Выберите оценку");
+                return;
+            }
+
+            const response = await fetch(`/items/${currentItemId}/rate`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    userId: userId,
+                    rating: selectedRating,
+                    comment: comment
+                })
+            });
+
+            if (response.ok) {
+                bootstrap.Modal.getInstance(document.getElementById("rateModal")).hide();
+            } else {
+                alert("Ошибка при сохранении оценки: вы уже ранее оценивали этот товар");
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

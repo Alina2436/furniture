@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Мебельный Магазин</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/templatemo.css}">
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
+
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/fontawesome.min.css}">
+</head>
+
+<body>
+
+<th:block th:replace="~{fragments/header :: header}"></th:block>
+<th:block th:replace="~{fragments/search :: search}"></th:block>
+
+<!-- Open Content -->
+<section class="bg-light">
+    <div class="container pb-5">
+        <div class="row">
+            <div class="col-lg-5 mt-5">
+                <div class="card mb-3">
+                    <img class="card-img img-fluid" th:src="@{${item.img}}" alt="Item image" id="product-detail">
+                </div>
+                <div class="row">
+                    <!--Start Controls-->
+                    <div class="col-1 align-self-center">
+                        <a href="#multi-item-example" role="button" data-bs-slide="prev">
+                            <i class="text-dark fas fa-chevron-left"></i>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                    </div>
+                    <!--End Controls-->
+                    <!--Start Carousel Wrapper-->
+                    <div id="multi-item-example" class="col-10 carousel slide carousel-multi-item"
+                         data-bs-ride="carousel">
+                        <!--Start Slides-->
+                        <div class="carousel-inner product-links-wap" role="listbox">
+                            <div class="carousel-item active">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <a href="#">
+                                            <img class="card-img img-fluid" th:src="@{${item.img}}"
+                                                 th:alt="${item.name}">
+                                        </a>
+                                    </div>
+                                    <div class="col-4">
+                                        <a href="#">
+                                            <img class="card-img img-fluid" th:src="@{${item.img}}"
+                                                 th:alt="${item.name}">
+                                        </a>
+                                    </div>
+                                    <div class="col-4">
+                                        <a href="#">
+                                            <img class="card-img img-fluid" th:src="@{${item.img}}"
+                                                 th:alt="${item.name}">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="carousel-item">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <a href="#">
+                                            <img class="card-img img-fluid" th:src="@{${item.img}}"
+                                                 th:alt="${item.name}">
+                                        </a>
+                                    </div>
+                                    <div class="col-4">
+                                        <a href="#">
+                                            <img class="card-img img-fluid" th:src="@{${item.img}}"
+                                                 th:alt="${item.name}">
+                                        </a>
+                                    </div>
+                                    <div class="col-4">
+                                        <a href="#">
+                                            <img class="card-img img-fluid" th:src="@{${item.img}}"
+                                                 th:alt="${item.name}">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--End Slides-->
+                    </div>
+                    <!--End Carousel Wrapper-->
+                    <!--Start Controls-->
+                    <div class="col-1 align-self-center">
+                        <a href="#multi-item-example" role="button" data-bs-slide="next">
+                            <i class="text-dark fas fa-chevron-right"></i>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                    <!--End Controls-->
+                </div>
+            </div>
+            <!-- col end -->
+
+            <div class="col-lg-7 mt-5">
+                <div class="card">
+                    <div class="card-body">
+                        <h1 class="h2" th:text="${item.name}"></h1>
+                        <p class="h3 py-2" th:text="${item.price} + '₽'"></p>
+                        <ul class="list-unstyled d-flex mb-1">
+                            <li th:each="i : ${#numbers.sequence(1, 5)}">
+                                <i th:classappend="${item.itemRating.rating >= i
+                                        ? 'text-warning fa fa-star'
+                                        : (
+                                            item.itemRating.rating >= (i - 0.5)
+                                            ? 'text-warning fa fa-star-half'
+                                            : 'text-muted fa fa-star'
+                                        )}"></i>
+                            </li>
+                        </ul>
+                        <span class="list-inline-item text-dark"
+                              th:text="' Рейтинг ' + ${item.itemRating.rating} + ' | ' + ${item.itemRating.count} + ' оценок'">
+                        </span>
+                        <ul class="list-inline">
+                            <li class="list-inline-item">
+                                <h6>Бренд:</h6>
+                            </li>
+                            <li class="list-inline-item">
+                                <p class="text-muted" th:text="${item.brand}"><strong></strong></p>
+                            </li>
+                        </ul>
+
+                        <h6>Информация о товаре:</h6>
+                        <p th:text="${item.description}"></p>
+                        <ul class="list-inline">
+                            <li class="list-inline-item">
+                                <h6>Доступно:</h6>
+                            </li>
+                            <li class="list-inline-item">
+                                <p class="text-muted" th:text="${item.count}"><strong></strong></p>
+                            </li>
+                        </ul>
+
+                        <h6>Детали</h6>
+                        <ul class="list-unstyled pb-3">
+                            <li>Гарантия: 24 месяца</li>
+                            <li>Срок службы: 10 лет</li>
+                            <li>Назначение: Дом / Улица / Кухня</li>
+                            <li>Экологичность: Да</li>
+                        </ul>
+
+                        <form id="product-form" th:data-item-id="${item.id}" th:data-max="${item.count}">
+                            <input type="hidden" name="product-title" th:value="${item.name}">
+                            <input type="hidden" name="product-quantity" id="product-quantity" value="1">
+
+                            <div class="row" th:if="${currentUser}">
+                                <div class="col-auto">
+                                    <ul class="list-inline pb-3">
+                                        <li class="list-inline-item text-right">
+                                            Количество
+                                            <input type="hidden" name="product-quanity" id="product-quanity" value="1">
+                                        </li>
+                                        <li class="list-inline-item"><span class="btn btn-success"
+                                                                           id="btn-minus">-</span></li>
+                                        <li class="list-inline-item"><span class="badge bg-secondary"
+                                                                           id="var-value">1</span></li>
+                                        <li class="list-inline-item"><span class="btn btn-success"
+                                                                           id="btn-plus">+</span></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row pb-3">
+                                <div class="col d-grid" th:if="${currentUser}">
+                                    <button type="submit" class="btn btn-success btn-lg" name="submit" id="btn-buy"
+                                            value="buy" th:data-item-id="${item.id}">Купить
+                                    </button>
+                                </div>
+                                <div class="col d-grid" th:if="${currentUser}">
+                                    <button type="submit" class="btn btn-success btn-lg"
+                                            name="submit" id="btn-add"
+                                            value="addtocard" th:data-item-id="${item.id}">Добавить в корзину
+                                    </button>
+                                </div>
+                                <div class="col d-grid" th:if="${currentUser == null}">
+                                    <a th:href="@{/login}" class="btn btn-success btn-lg">
+                                        Для оформления заказа войдите в систему
+                                    </a>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Close Content -->
+
+<section class="py-5">
+    <div class="container">
+        <div class="row mb-4">
+            <h4 class="fw-bold">Похожие товары</h4>
+        </div>
+
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+            <div class="col" th:each="relatedItem : ${related}">
+                <div class="card h-100 shadow-sm position-relative">
+                    <img th:src="@{${relatedItem.img}}" class="card-img-top"
+                         style="height: 200px; object-fit: cover;" alt="Фото товара">
+
+                    <div class="position-absolute top-0 end-0 m-2 d-flex flex-column align-items-center gap-2">
+                        <a class="btn btn-sm btn-success text-white like-button"
+                           th:if="${currentUser}"
+                           th:data-id="${relatedItem.id}"
+                           th:data-active="${likes.contains(relatedItem.id)}">
+                            <i class="fa-heart" th:classappend="${likes.contains(relatedItem.id) ? 'fas' : 'far'}"></i>
+                        </a>
+
+                        <a class="btn btn-sm btn-success text-white"
+                           th:href="@{/items/{id}(id=${relatedItem.id})}">
+                            <i class="far fa-eye"></i>
+                        </a>
+
+                        <a class="btn btn-sm btn-success text-white btn-icon-add-to-cart"
+                           th:if="${currentUser}"
+                           th:data-item-id="${relatedItem.id}">
+                            <i class="fas fa-cart-plus"></i>
+                        </a>
+                    </div>
+
+                    <div class="card-body text-center">
+                        <a th:href="@{/items/{id}(id=${relatedItem.id})}"
+                           class="h6 d-block text-dark text-decoration-none text-truncate mb-1"
+                           th:text="${relatedItem.name}"></a>
+
+                        <p class="text-muted small mb-2" th:text="${relatedItem.brand}"></p>
+
+                        <div class="d-flex justify-content-center mb-2">
+                            <i th:each="i : ${#numbers.sequence(1, 5)}"
+                               th:classappend="${relatedItem.itemRating.rating >= i
+                                   ? 'text-warning fa fa-star'
+                                   : (
+                                       relatedItem.itemRating.rating >= (i - 0.5)
+                                       ? 'text-warning fa fa-star-half'
+                                       : 'text-muted fa fa-star'
+                                   )}"></i>
+                        </div>
+
+                        <p class="fw-bold text-success mb-0" th:text="${relatedItem.price} + '₽'"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<th:block th:replace="~{fragments/footer :: footer}"></th:block>
+
+<script th:src="@{/js/jquery-1.11.0.min.js}"></script>
+<script th:src="@{/js/jquery-migrate-1.2.1.min.js}"></script>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/js/templatemo.js}"></script>
+<script th:src="@{/js/slick.min.js}"></script>
+<!--Like-->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".like-button").forEach(button => {
+            button.addEventListener("click", function (event) {
+                event.preventDefault();
+                const itemId = this.getAttribute("data-id");
+                const isActive = this.getAttribute("data-active") === "true";
+
+                fetch(`/items/${itemId}/like?active=${!isActive}`, {
+                    method: "POST"
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            this.setAttribute("data-active", !isActive);
+                            const icon = this.querySelector("i");
+                            icon.classList.toggle("fas", !isActive);
+                            icon.classList.toggle("far", isActive);
+                        } else {
+                            console.error("Ошибка при изменении лайка.", response.body);
+                        }
+                    })
+                    .catch(error => console.error("Ошибка:", error));
+            });
+        });
+    });
+</script>
+<!--Корзина-->
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+
+        function showToast(message) {
+            const toast = document.createElement("div");
+            toast.className = "custom-toast";
+
+            toast.innerHTML = `
+                <div class="toast-content">
+                    <span>${message}</span>
+                    <button class="toast-close" aria-label="Закрыть">&times;</button>
+                </div>
+                <div class="toast-footer">
+                    <a href="/cart" class="toast-link">Перейти в корзину</a>
+                </div>
+            `;
+
+            document.body.appendChild(toast);
+
+            toast.querySelector(".toast-close").addEventListener("click", () => {
+                toast.remove();
+            });
+
+            setTimeout(() => toast.remove(), 10000);
+        }
+
+        function showToastError(message) {
+            const toast = document.createElement("div");
+            toast.textContent = message;
+            toast.style.position = "fixed";
+            toast.style.top = "80px";
+            toast.style.right = "20px";
+            toast.style.background = "#dc3545";
+            toast.style.color = "#fff";
+            toast.style.padding = "10px 20px";
+            toast.style.borderRadius = "5px";
+            toast.style.zIndex = 9999;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 4000);
+        }
+
+        async function isItemNew(itemId) {
+            const res = await fetch(`/cart/hasItem?itemId=${itemId}`);
+            if (!res.ok) return false;
+            return !(await res.json());
+        }
+
+        function updateCartCounter(add = 1) {
+            const badge = document.getElementById("cart-counter");
+
+            if (badge) {
+                let current = parseInt(badge.textContent);
+
+                if (!isNaN(current)) {
+                    badge.textContent = current + add;
+                }
+            } else {
+                console.warn("cart-counter not found");
+            }
+        }
+
+        let addToCartFunc = button => {
+            button.addEventListener("click", async (e) => {
+                e.preventDefault();
+                const itemId = button.getAttribute("data-item-id");
+                let isNew = await isItemNew(itemId);
+
+                const response = await fetch(`/cart?itemId=${itemId}&count=1`, {
+                    method: "POST"
+                });
+
+                if (response.ok) {
+                    if (isNew) updateCartCounter(1);
+                    showToast("Добавлено в корзину");
+                } else {
+                    showToastError("Ошибка добавления");
+                }
+            });
+        };
+
+        document.querySelectorAll(".btn-icon-add-to-cart").forEach(addToCartFunc);
+
+        const form = document.getElementById("product-form");
+
+        if (form) {
+            const itemId = form.dataset.itemId;
+            const quantityInput = document.getElementById("product-quantity");
+
+            async function postToCart() {
+                const quantity = parseInt(quantityInput.value);
+                const response = await fetch(`/cart?itemId=${itemId}&count=${quantity}`, {
+                    method: "POST"
+                });
+                return response.ok;
+            }
+
+            document.getElementById("btn-add")?.addEventListener("click", async (event) => {
+                event.preventDefault();
+                let isNew = await isItemNew(itemId);
+
+                const ok = await postToCart();
+                if (ok) {
+                    if (isNew) updateCartCounter(1);
+                    showToast("Добавлено в корзину");
+                } else {
+                    showToastError("Ошибка добавления");
+                }
+            });
+
+            document.getElementById("btn-buy")?.addEventListener("click", async () => {
+                const ok = await postToCart();
+                if (ok) {
+                    window.location.href = "/cart";
+                } else {
+                    showToastError("Ошибка добавления");
+                }
+            });
+        }
+    });
+</script>
+<!--Количество-->
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const minusBtn = document.getElementById("btn-minus");
+        const plusBtn = document.getElementById("btn-plus");
+        const valueBadge = document.getElementById("var-value");
+        const quantityInput = document.getElementById("product-quantity");
+
+        const form = document.getElementById("product-form");
+        const maxCount = parseInt(form.dataset.max);
+
+        let quantity = 1;
+
+        function updateDisplay() {
+            valueBadge.textContent = quantity;
+            quantityInput.value = quantity;
+        }
+
+        plusBtn?.addEventListener("click", () => {
+            if (quantity < maxCount) {
+                quantity++;
+                updateDisplay();
+            }
+        });
+
+        minusBtn?.addEventListener("click", () => {
+            if (quantity > 1) {
+                quantity--;
+                updateDisplay();
+            }
+        });
+
+        updateDisplay();
+    });
+</script>
+<!--Slick-->
+<script>
+    $('#carousel-related-product').slick({
+        infinite: true,
+        arrows: false,
+        slidesToShow: 4,
+        slidesToScroll: 3,
+        dots: true,
+        responsive: [{
+            breakpoint: 1024,
+            settings: {
+                slidesToShow: 3,
+                slidesToScroll: 3
+            }
+        },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 3
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 3
+                }
+            }
+        ]
+    });
+</script>
+
+</body>
+
+</html>

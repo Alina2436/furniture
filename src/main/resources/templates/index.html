@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Мебельный Магазин</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/templatemo.css}">
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
+
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+    <link rel="stylesheet" th:href="@{/css/fontawesome.min.css}">
+</head>
+
+<body>
+<th:block th:replace="~{fragments/header :: header}"></th:block>
+<th:block th:replace="~{fragments/search :: search}"></th:block>
+
+<main>
+    <div id="template-mo-zay-hero-carousel" class="carousel slide" data-bs-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="0" class="active"></li>
+            <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="1"></li>
+            <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="container">
+                    <div class="row p-5">
+                        <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+                            <img class="img-fluid" th:src="@{/img/banner_img_01.jpg}" alt="">
+                        </div>
+                        <div class="col-lg-6 mb-0 d-flex align-items-center">
+                            <div class="text-align-left align-self-center">
+                                <h1 class="h1 text-success"><b>Zay</b> Client Chair</h1>
+                                <h3 class="h2">Бестселлер для вашего офиса</h3>
+                                <p>
+                                    Роскошная золотая рама — блеск и изысканность в каждом изгибе. Идеально для
+                                    гостиной, офиса, зоны ожидания или кафе.
+                                <p></p>
+                                Этот элегантный стул — идеальное сочетание утонченного стиля и непревзойденного
+                                удобства. Созданный для тех, кто ценит эксклюзивный дизайн, он станет ярким акцентом
+                                вашего интерьера.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="container">
+                    <div class="row p-5">
+                        <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+                            <img class="img-fluid" th:src="@{/img/banner_img_02.jpg}" alt="">
+                        </div>
+                        <div class="col-lg-6 mb-0 d-flex align-items-center">
+                            <div class="text-align-left">
+                                <h1 class="h1">Proident occaecat</h1>
+                                <h3 class="h2">Стиль и комфорт в одном кресле</h3>
+                                <p>
+                                    Подчеркните статус вашего пространства! Добавьте элегантности и комфорта с этим
+                                    эксклюзивным стулом.
+                                    Прочные материалы и надежная конструкция — гарантия долговечности. Эргономичный
+                                    дизайн для удобной поддержки спины.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="carousel-item">
+                <div class="container">
+                    <div class="row p-5">
+                        <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+                            <img class="img-fluid" th:src="@{/img/banner_img_03.jpg}" alt="">
+                        </div>
+                        <div class="col-lg-6 mb-0 d-flex align-items-center">
+                            <div class="text-align-left">
+                                <h1 class="h1">Repr in voluptate</h1>
+                                <h3 class="h2">Для стильного офиса или зоны отдыха</h3>
+                                <p>
+                                    Этот роскошный угловой диван — воплощение комфорта и стиля в одном предмете мебели.
+                                    Сочетание белоснежной обивки и контрастных черных акцентов создает эффектный
+                                    современный дизайн, который станет центральным элементом любого интерьера.
+                                <p></p>
+                                Мягкие подушки и глубокие сиденья обеспечивают максимальный комфорт для отдыха, а
+                                изящные формы и плавные линии подчёркивают его элегантность. Этот диван не просто
+                                место для сидения, это настоящий островок уюта и стиля в вашем доме.
+                                <p></p>
+                                Его продуманный дизайн и высококачественные материалы гарантируют долгий срок
+                                службы и лёгкость в уходе.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <a class="carousel-control-prev text-decoration-none w-auto ps-3" href="#template-mo-zay-hero-carousel"
+           role="button" data-bs-slide="prev">
+            <i class="fas fa-chevron-left"></i>
+        </a>
+
+        <a class="carousel-control-next text-decoration-none w-auto pe-3" href="#template-mo-zay-hero-carousel"
+           role="button" data-bs-slide="next">
+            <i class="fas fa-chevron-right"></i>
+        </a>
+    </div>
+
+    <section class="container py-5">
+        <div class="row text-center pt-3">
+            <div class="col-lg-6 m-auto">
+                <h1 class="h1">Популярное в этом месяце</h1>
+                <p>
+                    Основано на запросах клиентов и заказах на нашей платформе
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-4 p-5 mt-3">
+                <a href="#"><img th:src="@{/img/category_img_01.jpg}" class="rounded-circle img-fluid border"
+                                 alt=""></a>
+                <h5 class="text-center mt-3 mb-3">Диваны</h5>
+                <p class="text-center"><a class="btn btn-success" th:href="@{/items}">За покупками</a></p>
+            </div>
+            <div class="col-12 col-md-4 p-5 mt-3">
+                <a href="#"><img th:src="@{/img/category_img_02.jpg}" class="rounded-circle img-fluid border"
+                                 alt=""></a>
+                <h2 class="h5 text-center mt-3 mb-3">Кухни</h2>
+                <p class="text-center"><a class="btn btn-success" th:href="@{/items}">За покупками</a></p>
+            </div>
+            <div class="col-12 col-md-4 p-5 mt-3">
+                <a href="#"><img th:src="@{/img/category_img_03.jpg}" class="rounded-circle img-fluid border"
+                                 alt=""></a>
+                <h2 class="h5 text-center mt-3 mb-3">Дачное</h2>
+                <p class="text-center"><a class="btn btn-success" th:href="@{/items}">За покупками</a></p>
+            </div>
+        </div>
+    </section>
+</main>
+
+<th:block th:replace="~{fragments/footer :: footer}"></th:block>
+
+<script th:src="@{/js/jquery-1.11.0.min.js}"></script>
+<script th:src="@{/js/jquery-migrate-1.2.1.min.js}"></script>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/js/templatemo.js}"></script>
+
+</body>
+</html>

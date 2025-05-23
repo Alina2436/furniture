@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Мебельный Магазин</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/templatemo.css}">
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
+
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/fontawesome.min.css}">
+</head>
+
+<body>
+<th:block th:replace="~{fragments/header :: header}"></th:block>
+<th:block th:replace="~{fragments/search :: search}"></th:block>
+
+<div class="container py-5">
+    <div class="row">
+
+        <div class="col-lg-3">
+            <h1 class="h2 pb-4">Категории</h1>
+            <ul class="list-unstyled templatemo-accordion">
+                <li class="pb-3">
+                    <a class="collapsed d-flex justify-content-between h3 text-decoration-none" href="#">
+                        Популярное
+                        <i class="pull-right fa fa-fw fa-chevron-circle-down mt-1"></i>
+                    </a>
+                    <ul id="collapseTwo" class="collapse list-unstyled pl-3">
+                        <li>
+                            <a class="text-decoration-none"
+                               th:href="@{/items(page=0, sort=${sort}, category='')}">Все категории</a>
+                        </li>
+                        <li th:if="${currentUser}">
+                            <a class="text-decoration-none"
+                               th:href="@{/items(page=0, sort=${sort}, category='likes')}"
+                               th:classappend="${category == 'likes'} ? 'active-category'">Избранное</a>
+                        </li>
+                        <li>
+                            <a class="text-decoration-none"
+                               th:href="@{/items(page=0, sort=${sort}, category='/sofa/')}"
+                               th:classappend="${category == '/sofa/'} ? 'active-category'">Диваны</a>
+                        </li>
+                        <li>
+                            <a class="text-decoration-none"
+                               th:href="@{/items(page=0, sort=${sort}, category='/kitchen/')}"
+                               th:classappend="${category == '/kitchen/'} ? 'active-category'">Кухни</a>
+                        </li>
+                        <li>
+                            <a class="text-decoration-none"
+                               th:href="@{/items(page=0, sort=${sort}, category='/dacha/')}"
+                               th:classappend="${category == '/dacha/'} ? 'active-category'">Дачное</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="col-lg-9">
+            <div class="row">
+                <div class="col-md-6 pb-4">
+                    <div class="d-flex">
+                        <select class="form-control" onchange="location = this.value">
+                            <option th:if="${sort == 'itemRating.rating'}"
+                                    th:value="@{/items(page=0, sort='itemRating.rating', category=${category})}"
+                                    selected>Рейтинг
+                            </option>
+                            <option th:if="${sort == 'name'}"
+                                    th:value="@{/items(page=0, sort='name', category=${category})}"
+                                    selected>А-Я
+                            </option>
+                            <option th:if="${sort == 'price'}"
+                                    th:value="@{/items(page=0, sort='price', category=${category})}"
+                                    selected>Цена
+                            </option>
+
+                            <option th:if="${sort != 'itemRating.rating'}"
+                                    th:value="@{/items(page=0, sort='itemRating.rating', category=${category})}">Рейтинг
+                            </option>
+                            <option th:if="${sort != 'name'}"
+                                    th:value="@{/items(page=0, sort='name', category=${category})}">А-Я
+                            </option>
+                            <option th:if="${sort != 'price'}"
+                                    th:value="@{/items(page=0, sort='price', category=${category})}">Цена
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row row-cols-2 row-cols-md-3 g-4" th:each="item: ${items}">
+                <div class="col-md-6">
+                    <div class="card mb-4 product-wap rounded-0">
+                        <div class="card rounded-0">
+
+                            <img class="card-img rounded-0 img-fluid" th:src="@{${item.img}}">
+
+                            <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
+                                <ul class="list-unstyled">
+
+                                    <li th:if="${currentUser}">
+                                        <a class="btn btn-success text-white like-button"
+                                           th:data-id="${item.id}"
+                                           th:data-active="${likes.contains(item.id)}">
+                                            <i class="fa-heart"
+                                               th:classappend="${likes.contains(item.id) ? 'fas' : 'far'}"></i>
+                                        </a>
+                                    </li>
+
+                                    <li><a class="btn btn-success text-white mt-2"
+                                           th:href="@{/items/{id}(id=${item.id})}"><i class="far fa-eye"></i></a></li>
+                                    <li th:if="${currentUser}"><a
+                                            class="btn btn-success text-white mt-2 btn-icon-add-to-cart"
+                                            th:data-item-id="${item.id}"><i class="fas fa-cart-plus"></i></a></li>
+
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <a th:href="@{/items/{id}(id=${item.id})}" class="h3 text-decoration-none"
+                               th:text="${item.name}"></a>
+                            <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
+                                <li class="pt-2">
+                                    <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
+                                    <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
+                                    <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
+                                    <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
+                                    <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
+                                </li>
+                            </ul>
+                            <ul class="list-unstyled d-flex justify-content-center mb-1">
+                                <li th:each="i : ${#numbers.sequence(1, 5)}">
+                                    <i th:classappend="${item.itemRating.rating >= i
+                                    ? 'text-warning fa fa-star'
+                                    : (
+                                        item.itemRating.rating >= (i - 0.5)
+                                        ? 'text-warning fa fa-star-half'
+                                        : 'text-muted fa fa-star'
+                                    )}"></i>
+                                </li>
+                            </ul>
+                            <p class="text-center mb-0" th:text="${item.price} + '₽'"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <ul class="pagination pagination-lg justify-content-end">
+                    <li class="page-item" th:classappend="${items.hasPrevious() ? '' : 'disabled'}">
+                        <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0"
+                           th:classappend="${items.hasPrevious() ? 'text-dark' : 'text-muted'}"
+                           th:href="@{/items(page=${items.number - 1}, sort=${sort}, category=${category})}">&laquo;</a>
+                    </li>
+                    <li class="page-item" th:each="i : ${#numbers.sequence(0, items.totalPages - 1)}"
+                        th:classappend="${items.number == i ? 'active' : ''}">
+                        <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0 text-dark"
+                           th:href="@{/items(page=${i}, sort=${sort}, category=${category})}" th:text="${i + 1}"></a>
+                    </li>
+                    <li class="page-item" th:classappend="${items.hasNext() ? '' : 'disabled'}">
+                        <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0"
+                           th:classappend="${items.hasNext() ? 'text-dark' : 'text-muted'}"
+                           th:href="@{/items(page=${items.number + 1}, sort=${sort}, category=${category})}">&raquo;</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<section class="bg-light py-5">
+    <div class="container my-4">
+        <div class="row text-center py-3">
+            <div class="col-lg-6 m-auto">
+                <h1 class="h1">Наши бренды</h1>
+            </div>
+            <div class="col-lg-9 m-auto tempaltemo-carousel">
+                <div class="row d-flex flex-row">
+                    <!--Controls-->
+                    <div class="col-1 align-self-center">
+                        <a class="h1" href="#multi-item-example" role="button" data-bs-slide="prev">
+                            <i class="text-light fas fa-chevron-left"></i>
+                        </a>
+                    </div>
+                    <!--End Controls-->
+
+                    <!--Carousel Wrapper-->
+                    <div class="col">
+                        <div class="carousel slide carousel-multi-item pt-2 pt-md-0" id="multi-item-example"
+                             data-bs-ride="carousel">
+                            <!--Slides-->
+                            <div class="carousel-inner product-links-wap" role="listbox">
+
+                                <!--First slide-->
+                                <div class="carousel-item active">
+                                    <div class="row">
+                                        <div class="col-3 p-md-5">
+                                            <a href="#"><img class="img-fluid brand-img"
+                                                             th:src="@{/img/brand/linden.png}"
+                                                             alt="Brand Logo"></a>
+                                        </div>
+                                        <div class="col-3 p-md-5">
+                                            <a href="#"><img class="img-fluid brand-img"
+                                                             th:src="@{/img/brand/oakway.png}"
+                                                             alt="Brand Logo"></a>
+                                        </div>
+                                        <div class="col-3 p-md-5">
+                                            <a href="#"><img class="img-fluid brand-img"
+                                                             th:src="@{/img/brand/strathmore.png}"
+                                                             alt="Brand Logo"></a>
+                                        </div>
+                                        <div class="col-3 p-md-5">
+                                            <a href="#"><img class="img-fluid brand-img"
+                                                             th:src="@{/img/brand/vanton.png}"
+                                                             alt="Brand Logo"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--End First slide-->
+
+                                <!--Second slide-->
+                                <div class="carousel-item">
+                                    <div class="row">
+                                        <div class="col-3 p-md-5">
+                                            <a href="#"><img class="img-fluid brand-img"
+                                                             th:src="@{/img/brand/linden.png}"
+                                                             alt="Brand Logo"></a>
+                                        </div>
+                                        <div class="col-3 p-md-5">
+                                            <a href="#"><img class="img-fluid brand-img"
+                                                             th:src="@{/img/brand/oakway.png}"
+                                                             alt="Brand Logo"></a>
+                                        </div>
+                                        <div class="col-3 p-md-5">
+                                            <a href="#"><img class="img-fluid brand-img"
+                                                             th:src="@{/img/brand/strathmore.png}"
+                                                             alt="Brand Logo"></a>
+                                        </div>
+                                        <div class="col-3 p-md-5">
+                                            <a href="#"><img class="img-fluid brand-img"
+                                                             th:src="@{/img/brand/vanton.png}"
+                                                             alt="Brand Logo"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--End Second slide-->
+
+                                <!--Third slide-->
+                                <div class="carousel-item">
+                                    <div class="row">
+                                        <div class="col-3 p-md-5">
+                                            <a href="#"><img class="img-fluid brand-img"
+                                                             th:src="@{/img/brand/linden.png}"
+                                                             alt="Brand Logo"></a>
+                                        </div>
+                                        <div class="col-3 p-md-5">
+                                            <a href="#"><img class="img-fluid brand-img"
+                                                             th:src="@{/img/brand/oakway.png}"
+                                                             alt="Brand Logo"></a>
+                                        </div>
+                                        <div class="col-3 p-md-5">
+                                            <a href="#"><img class="img-fluid brand-img"
+                                                             th:src="@{/img/brand/strathmore.png}"
+                                                             alt="Brand Logo"></a>
+                                        </div>
+                                        <div class="col-3 p-md-5">
+                                            <a href="#"><img class="img-fluid brand-img"
+                                                             th:src="@{/img/brand/vanton.png}"
+                                                             alt="Brand Logo"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--End Third slide-->
+
+                            </div>
+                            <!--End Slides-->
+                        </div>
+                    </div>
+                    <!--End Carousel Wrapper-->
+
+                    <!--Controls-->
+                    <div class="col-1 align-self-center">
+                        <a class="h1" href="#multi-item-example" role="button" data-bs-slide="next">
+                            <i class="text-light fas fa-chevron-right"></i>
+                        </a>
+                    </div>
+                    <!--End Controls-->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<th:block th:replace="~{fragments/footer :: footer}"></th:block>
+
+<script th:src="@{/js/jquery-1.11.0.min.js}"></script>
+<script th:src="@{/js/jquery-migrate-1.2.1.min.js}"></script>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/js/templatemo.js}"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".like-button").forEach(button => {
+            button.addEventListener("click", function (event) {
+                event.preventDefault();
+                const itemId = this.getAttribute("data-id");
+                const isActive = this.getAttribute("data-active") === "true";
+
+                fetch(`/items/${itemId}/like?active=${!isActive}`, {
+                    method: "POST"
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            this.setAttribute("data-active", !isActive);
+                            const icon = this.querySelector("i");
+                            icon.classList.toggle("fas", !isActive);
+                            icon.classList.toggle("far", isActive);
+                        } else {
+                            console.error("Ошибка при изменении лайка.", response.body);
+                        }
+                    })
+                    .catch(error => console.error("Ошибка:", error));
+            });
+        });
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+
+        async function isItemNew(itemId) {
+            const res = await fetch(`/cart/hasItem?itemId=${itemId}`);
+            if (!res.ok) return false;
+            return !(await res.json());
+        }
+
+        function updateCartCounter(add = 1) {
+            const badge = document.getElementById("cart-counter");
+
+            if (badge) {
+                let current = parseInt(badge.textContent);
+
+                if (!isNaN(current)) {
+                    badge.textContent = current + add;
+                }
+            } else {
+                console.warn("cart-counter not found");
+            }
+        }
+
+        document.querySelectorAll(".btn-icon-add-to-cart").forEach(button => {
+
+            button.addEventListener("click", async (e) => {
+                e.preventDefault();
+                const itemId = button.getAttribute("data-item-id");
+                let isNew = await isItemNew(itemId);
+
+                const response = await fetch(`/cart?itemId=${itemId}&count=1`, {
+                    method: "POST"
+                });
+
+                if (response.ok) {
+                    if (isNew) updateCartCounter(1);
+                    showToast("Добавлено в корзину");
+                } else {
+                    showToastError("Ошибка добавления");
+                }
+            });
+        });
+
+        function showToast(message) {
+
+            const toast = document.createElement("div");
+            toast.className = "custom-toast";
+
+            toast.innerHTML = `
+        <div class="toast-content">
+            <span>${message}</span>
+            <button class="toast-close" aria-label="Закрыть">&times;</button>
+        </div>
+        <div class="toast-footer">
+            <a href="/cart" class="toast-link">Перейти в корзину</a>
+        </div>
+    `;
+
+            document.body.appendChild(toast);
+
+            toast.querySelector(".toast-close").addEventListener("click", () => {
+                toast.remove();
+            });
+
+            setTimeout(() => toast.remove(), 10000);
+        }
+
+        function showToastError(message) {
+            const toast = document.createElement("div");
+            toast.textContent = message;
+            toast.style.position = "fixed";
+            toast.style.top = "80px";
+            toast.style.right = "20px";
+            toast.style.background = "#28a745";
+            toast.style.color = "#fff";
+            toast.style.padding = "10px 20px";
+            toast.style.borderRadius = "5px";
+            toast.style.zIndex = 9999;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 4000);
+        }
+    });
+</script>
+
+</body>
+
+</html>

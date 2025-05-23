@@ -1,0 +1,33 @@
+services:
+
+  postgres:
+    image: postgres:16
+    container_name: postgres
+    environment:
+      - POSTGRES_DB=furniture
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - config.support_escapes=true
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    networks:
+      - dns
+
+  redis:
+    image: redis:alpine
+    container_name: redis
+    ports:
+      - 6379:6379
+    volumes:
+      - redis_data:/data
+    networks:
+      - dns
+
+volumes:
+  pg_data:
+  redis_data:
+
+networks:
+  dns:

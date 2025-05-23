@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Как выбрать идеальный диван</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+  <link rel="stylesheet" th:href="@{/css/templatemo.css}">
+  <link rel="stylesheet" th:href="@{/css/custom.css}">
+
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" th:href="@{/css/fontawesome.min.css}">
+  <style>
+    body { background-color: #f5f5f5; }
+    .article-cover { max-height: 400px; object-fit: cover; }
+    .article-body p { line-height: 1.7; margin-bottom: 1rem; }
+    .article-body h2 { margin-top: 2rem; font-size: 1.5rem; }
+  </style>
+</head>
+<body>
+
+<th:block th:replace="~{fragments/header :: header}"></th:block>
+<th:block th:replace="~{fragments/search :: search}"></th:block>
+
+<div class="container py-5">
+  <h1 class="fw-bold mb-2">Как выбрать идеальный диван</h1>
+  <p class="text-muted">Опубликовано: 21 мая 2025</p>
+
+  <img th:src="@{/img/articles/sofa.png}" alt="Диван" class="img-fluid rounded article-cover mb-4">
+
+  <div class="article-body">
+    <p>Диван — сердце гостиной. Удобство, стиль, функциональность — ключевые качества хорошей модели.</p>
+
+    <h2>Размер и форма</h2>
+    <p>Определи, сколько места доступно. Угловые — для просторных комнат, прямые — для компактных интерьеров.</p>
+
+    <h2>Обивка</h2>
+    <p>Ткань уютная, кожа — респектабельна и долговечна. Практичный выбор — антивандальная ткань или чехлы.</p>
+
+    <h2>Механизм трансформации</h2>
+    <p>Если диван будет местом для сна — подойдут «дельфин», «еврокнижка» или «аккордеон».</p>
+
+    <p>Выбирая диван, не спешите — он станет вашим ежедневным спутником на годы вперёд.</p>
+  </div>
+
+  <a th:href="@{/articles}" class="btn btn-outline-secondary mt-4">← Назад к статьям</a>
+</div>
+
+<th:block th:replace="~{fragments/footer :: footer}"></th:block>
+</body>
+</html>

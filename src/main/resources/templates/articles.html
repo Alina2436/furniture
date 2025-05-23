@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Интересные статьи о мебели</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/templatemo.css}">
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
+
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/fontawesome.min.css}">
+    <style>
+        body {
+            background-color: #f5f5f5;
+        }
+
+        .card-img-top {
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .section-title {
+            font-weight: 700;
+            margin-bottom: 2rem;
+        }
+
+        .card-text {
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+<body>
+
+<th:block th:replace="~{fragments/header :: header}"></th:block>
+<th:block th:replace="~{fragments/search :: search}"></th:block>
+
+<div class="container py-5">
+    <h2 class="text-center section-title">Интересные статьи о мебели</h2>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+
+        <div class="col">
+            <div class="card h-100 shadow-sm">
+                <img th:src="@{/img/articles/sofa.png}" class="card-img-top" alt="Как выбрать диван">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">Как выбрать идеальный диван</h5>
+                    <p class="card-text text-muted">Узнайте, какие параметры важны при выборе дивана: наполнение,
+                        обивка, механизм.</p>
+                    <a th:href="@{/articles/1}" class="btn btn-success mt-auto">Читать далее</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card h-100 shadow-sm">
+                <img th:src="@{/img/articles/kitchen.png}" class="card-img-top" alt="Тренды кухни">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">Тренды в дизайне кухни 2025</h5>
+                    <p class="card-text text-muted">Какие цвета, материалы и планировки будут в моде? Советы от
+                        дизайнеров интерьера.</p>
+                    <a th:href="@{/articles/2}" class="btn btn-success mt-auto">Читать далее</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card h-100 shadow-sm">
+                <img th:src="@{/img/articles/terrace.png}" class="card-img-top" alt="Мебель для дачи">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">Мебель для дачи и террас</h5>
+                    <p class="card-text text-muted">Разбираемся, как выбрать устойчивую к погоде и стильную уличную
+                        мебель для отдыха.</p>
+                    <a th:href="@{/articles/3}" class="btn btn-success mt-auto">Читать далее</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center mt-5">
+        <p class="text-muted">Следите за обновлениями — скоро появятся новые статьи!</p>
+    </div>
+</div>
+
+<th:block th:replace="~{fragments/footer :: footer}"></th:block>
+
+</body>
+</html>

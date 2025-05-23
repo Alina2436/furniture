@@ -1,0 +1,144 @@
+html {
+    scroll-behavior: smooth;
+}
+
+header .dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+header .dropdown-menu {
+    display: block;
+    position: absolute;
+    right: 0;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 10px 0;
+    min-width: 150px;
+    max-width: 200px;
+    border-radius: 4px;
+    text-align: left;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    visibility: hidden;
+    pointer-events: none;
+    z-index: 1000;
+    white-space: nowrap;
+}
+
+header .dropdown:hover .dropdown-menu {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+    pointer-events: auto;
+}
+
+header .dropdown-menu a,
+header .dropdown-menu button {
+    display: block;
+    padding: 8px 15px;
+    color: #333;
+    text-decoration: none;
+    white-space: nowrap;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+}
+
+header .dropdown-menu a:hover,
+header .dropdown-menu button:hover {
+    background-color: #f1f1f1;
+}
+
+header .profile-btn {
+    background: none;
+    border: none;
+    color: #333;
+    cursor: pointer;
+    padding: 8px 15px;
+    text-align: left;
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .row > .col-md-6 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+}
+
+.active-category {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.badge {
+    font-size: 0.75rem;
+    vertical-align: top;
+}
+
+.bg-danger {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.rounded-pill {
+    border-radius: 10rem;
+    padding: 0.25em 0.6em;
+}
+
+.ms-2 {
+    margin-left: 0.5rem;
+}
+
+.custom-toast {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    background-color: #28a745;
+    color: white;
+    padding: 16px;
+    border-radius: 8px;
+    z-index: 10000;
+    width: 260px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    font-family: sans-serif;
+}
+
+.toast-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.toast-close {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.toast-footer {
+    margin-top: 8px;
+    text-align: right;
+}
+
+.toast-link {
+    color: #fff;
+    text-decoration: underline;
+    font-size: 0.9em;
+}
+
+.toast-link:hover {
+    text-decoration: none;
+}
+
+.small-card {
+    max-width: 250px;
+    margin-left: auto;
+    margin-right: auto;
+}

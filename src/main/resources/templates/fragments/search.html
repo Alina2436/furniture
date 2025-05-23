@@ -1,0 +1,64 @@
+<div th:fragment="search">
+    <!-- Модалка поиска -->
+    <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Поиск товаров</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                    <label for="searchInput"></label>
+                    <input type="text" id="searchInput" class="form-control mb-3" placeholder="Что вы ищете?">
+
+                    <ul id="searchResults" class="list-group">
+                        <!-- Результаты -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const input = document.getElementById("searchInput");
+            const results = document.getElementById("searchResults");
+
+            if (!input) return;
+
+            input.addEventListener("input", async () => {
+                const text = input.value.trim();
+
+                if (text.length < 2) {
+                    results.innerHTML = "";
+                    return;
+                }
+
+                const res = await fetch(`/search?text=${encodeURIComponent(text)}`);
+                const data = await res.json();
+
+                results.innerHTML = "";
+
+                data.slice(0, 10).forEach(item => {
+                    const li = document.createElement("li");
+                    li.className = "list-group-item d-flex align-items-center";
+
+                    li.innerHTML = `
+                <img src="${item.img}" alt="${item.name}" style="width: 50px; height: 50px; object-fit: cover;" class="me-3 rounded">
+                <div class="flex-grow-1">
+                    <strong>${item.name}</strong><br>
+                    <small class="text-muted">${item.brand}</small>
+                </div>
+                <span class="text-success fw-bold ms-auto">${item.price} ₽</span>
+            `;
+
+                    li.addEventListener("click", () => {
+                        window.location.href = '/items/' + item.id;
+                    });
+
+                    results.appendChild(li);
+                });
+            });
+        });
+    </script>
+</div>

@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - include:
+        file: db/changelog/base-schema.sql
+  - include:
+        file: db/changelog/demo-sofa.sql
+  - include:
+        file: db/changelog/demo-dacha.sql
+  - include:
+        file: db/changelog/demo-kitchen.sql
